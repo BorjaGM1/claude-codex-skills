@@ -1,6 +1,6 @@
 # CLI flags (headless focus)
 
-Verified against **codex-cli 0.153.x**. Check with `codex --help` / `codex exec --help`.
+Verified against **codex-cli 0.153.x** (review-prompt rule re-checked on 0.172). Check with `codex --help` / `codex exec --help`.
 
 ## Global flags
 - `--add-dir <path>` — grant additional directories write access alongside the main workspace.
@@ -39,7 +39,7 @@ Sub-subcommands: `codex exec resume [--last]`, `codex exec fork`, `codex exec re
 
 ## codex review flags
 `--uncommitted`, `--base <BRANCH>`, `--commit <SHA>`, `--title <TITLE>`, and a
-`PROMPT` (or `-` for stdin) for custom emphasis — but on 0.160 the `PROMPT` is
+`PROMPT` (or `-` for stdin) for custom emphasis — but on 0.160–0.172 the `PROMPT` is
 **refused when combined with any scope flag** ("cannot be used with '[PROMPT]'").
 Run a scoped review bare, with stdin closed.
 

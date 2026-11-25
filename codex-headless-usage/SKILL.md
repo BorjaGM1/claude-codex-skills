@@ -1,6 +1,6 @@
 ---
 name: codex-headless-usage
-description: Headless Codex CLI usage for deep thinking and analysis. Codex is a thinker, not an implementer — read-only by default. gpt-6.1-sol @ low default (astra for "will this fix hold?", luna never); effort buys no findings, so don't pay for xhigh; ultra does not delegate. Master reference for all codex-* skills.
+description: Headless Codex CLI usage for deep thinking and analysis. Codex is a thinker, not an implementer — read-only by default. gpt-6.2-sol @ low default (6.2-astra an equivalent second opinion, luna never); effort buys no findings, so don't pay for xhigh; ultra does not delegate. Master reference for all codex-* skills.
 ---
 
 # Headless Codex (codex exec)
@@ -18,40 +18,44 @@ Claude Code implements. Codex thinks.
 
 ## Model
 
-Default (current `~/.codex/config.toml`): `gpt-6.1-sol` at `low`.
+Default: `gpt-6.2-sol` at `low` — set it in `~/.codex/config.toml`:
 
 ```
-model = "gpt-6.1-sol"
+model = "gpt-6.2-sol"
 model_reasoning_effort = "low"
 ```
 
 User's `~/.codex/config.toml` sets these globally; CLI flags override per-call.
-**Needs codex-cli ≥ 0.160** — older binaries don't list the 6.x sol/luna models
+**Needs codex-cli ≥ 0.172** — older binaries don't list the 6.2 models
 (`brew upgrade --cask codex`).
 
-**Effort buys no findings.** Measured 2026-10-03 on five fixtures: 6.1-sol at
-`low`, `medium`, `high` and `xhigh` returned the *same* findings; high/xhigh cost
-1.7×/3× the latency. Same result as astra in September. Pin `low`.
+**Effort buys no findings.** Measured 2026-11-25: 6.2-sol at `xhigh` returned the
+same findings as `low` at 3.7× the latency (same result for the previous models
+in October and September). Pin `low`.
 
 **Pick the model by what you're asking for:**
 
-- *Anything* (review, forensics, consult, audit) → **`gpt-6.1-sol` @ low**.
-  Same findings as astra on every fixture, slightly faster.
-- *"Is this fix right / will this hold?"* → **`gpt-6-astra` @ medium**. Astra (and
-  6.1-sol only at xhigh, ~2× slower) is the one that says out loud when the
-  obvious fix is incomplete. The *fix it proposes* is the same either way.
+- *Anything* (review, forensics, consult, audit) → **`gpt-6.2-sol` @ low**.
+  On real-world regressions (blind-graded, 2026-11-25) it found 56% vs 37% for
+  the previous `gpt-6.1-sol` on the same cases, with 0 wrong claims.
+- *A second opinion* → **`gpt-6.2-astra` @ medium**. It tied 6.2-sol (60% vs 56%,
+  noise) and is the most thorough on secondary edge cases. Neither model says on
+  its own when the obvious fix is incomplete: to check a fix holds, *ask that
+  explicitly* ("is this fix complete? what does it miss?").
+- `gpt-6.1-sol` / `gpt-6-astra` are "previous generation" — ~20 points behind.
 - **Never `gpt-6-luna` / `gpt-5.6-luna` for review** — luna called buggy code
   correct, fabricated failing inputs, and found 4.8% of real regressions.
 - **Don't use `gpt-6-sol` as a second pass** — 31% per run on real regressions and
   +1 bug over 6.1-sol. A second *Codex* model barely helps; a second *vendor* would.
 
 ```
-codex exec -m gpt-6-astra -c model_reasoning_effort=medium ...   # fix-depth check
+codex exec -m gpt-6.2-astra -c model_reasoning_effort=medium ...   # second opinion
 ```
 
 **No 6.x model gets plugin/apps instructions injected.** If you actually want
 Codex driving plugins (documents, spreadsheets, browser, `image_gen`), use
-`gpt-5.6-sol`.
+`gpt-5.6-sol` — but it **retires 2026-12-23** (→ `gpt-6.2-sol`, which has no
+plugin instructions).
 
 ### The ladder
 
@@ -64,9 +68,9 @@ Codex driving plugins (documents, spreadsheets, browser, `image_gen`), use
   `spawn_agent` / `followup_task` / `send_message` events, matching
   `multi_agent_v2` being effective-`false` in `codex features list`. One such run
   cost 259s and ~170k input tokens for a single answer. **Don't pay for it.**
-- **`max` is still model-gated** — pinning it on `gpt-5.5` errors (and 5.5 retires 2026-10-14).
+- **`max` is model-gated** — check `supported_reasoning_levels` in `codex debug models` (luna has no `ultra`).
 
-These numbers were measured in October 2026. When a new model ships, check the
+These numbers were measured in November 2026 (codex-cli 0.172). When a new model ships, check the
 live lineup with `codex debug models` before trusting the names above.
 
 ## Git repo requirement

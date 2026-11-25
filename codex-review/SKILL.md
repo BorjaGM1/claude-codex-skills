@@ -26,7 +26,7 @@ codex review --commit <sha>    # a specific commit
 It runs git/grep/read on its own (read-only) and returns structured
 `[P#] file:line` findings, most-severe first.
 
-**No custom prompt with a scope flag.** On codex-cli 0.160, `--uncommitted`,
+**No custom prompt with a scope flag.** On codex-cli 0.160 and 0.172 (verified), `--uncommitted`,
 `--base` and `--commit` each refuse a `[PROMPT]` ("cannot be used with
 '[PROMPT]'"). Close stdin (`< /dev/null`) and run it bare; when you need to steer
 the emphasis, use the deep path below with `codex exec`.
@@ -63,7 +63,7 @@ Be specific. Reference line numbers. Explain why each issue matters.
 Bump to `xhigh` here **only** when you want Codex to *reason through* a hard design
 tradeoff — that buys depth of explanation, not more findings, at ~3× latency. If
 the review comes back thin — or the change matters — the productive move is a
-second pass with `-c model="gpt-6-astra"`. More effort on the same model buys nothing.
+second pass with `-c model="gpt-6.2-astra"`. More effort on the same model buys nothing.
 
 > `codex review` has **no `--model` flag** — steer it with `-c model=…`.
 

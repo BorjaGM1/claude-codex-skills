@@ -26,9 +26,11 @@ round only when the target is a whole repo.
 
 Tune the **model** instead:
 
-- **Default rounds** → `gpt-6.1-sol` (config default).
-- **Stress-testing a proposal** ("would this actually hold?") → `-m gpt-6-astra
-  -c model_reasoning_effort=medium`. It is the one that *says* when a fix is incomplete.
+- **Default rounds** → `gpt-6.2-sol` (config default).
+- **Stress-testing a proposal** ("would this actually hold?") → ask exactly that,
+  in so many words ("is this fix complete? what does it miss?"). No 6.2 model
+  volunteers it. `-m gpt-6.2-astra -c model_reasoning_effort=medium` is an
+  equivalent second opinion.
 
 ## The process
 

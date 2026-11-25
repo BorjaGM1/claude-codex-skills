@@ -17,16 +17,18 @@ cp -R peloteo codex-headless-usage codex-review codex-consult ~/.claude/skills/
 ```
 
 Requisitos:
-- `codex` CLI ≥ 0.160 con sesión iniciada (`brew upgrade --cask codex`, luego `codex login`).
+- `codex` CLI ≥ 0.172 con sesión iniciada (`brew upgrade --cask codex`, luego `codex login`).
 - `gh` con sesión iniciada si quieres que Claude abra la PR.
 - Recomendado en `~/.codex/config.toml` (las skills asumen esto):
 
   ```toml
-  model = "gpt-6.1-sol"
+  model = "gpt-6.2-sol"
   model_reasoning_effort = "low"
   ```
 
   Sí, `low`: más effort no encontró más fallos en ninguna prueba, solo tarda más.
+  `gpt-6.2-sol` es el que mejor salió en mis pruebas con regresiones reales
+  (noviembre 2026). Si usas `gpt-5.6-sol`, se retira el 23-dic-2026.
 
 ## Usarlo
 

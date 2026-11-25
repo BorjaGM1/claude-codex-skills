@@ -119,7 +119,7 @@ tail -60 "$DIR/code-review-1.md"   # los hallazgos [P#] fichero:línea van al fi
 ```
 
 `codex review` **no acepta prompt** junto a `--base`/`--uncommitted`/`--commit`
-(codex-cli 0.160 da error). Si quieres darle contexto, usa la pasada b.
+(codex-cli 0.160 y 0.172 dan error). Si quieres darle contexto, usa la pasada b.
 
 **b) Contra lo acordado** — en la misma sesión del plan, que ya recuerda las
 decisiones:
